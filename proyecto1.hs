@@ -45,3 +45,4 @@ pertenece n (x:xs) = (n == x) || (pertenece n xs)
 paratodo' :: [a] -> (a -> Bool) -> Bool
 paratodo' [] t = True 
 paratodo' (a:as) t = (t a) &&  (paratodo' as t)
+--Ejercicio 4
