@@ -45,4 +45,38 @@ pertenece n (x:xs) = (n == x) || (pertenece n xs)
 paratodo' :: [a] -> (a -> Bool) -> Bool
 paratodo' [] t = True 
 paratodo' (a:as) t = (t a) &&  (paratodo' as t)
---Ejercicio 4
+--Ejercicio 4-a
+
+existe' :: [a] -> (a -> Bool) -> Bool
+existe' [] t = False
+existe' (x:xs) t = (t x) || (existe' xs t)
+--Ejercicio 4-b
+
+sumatoria' :: [a] -> (a -> Int) -> Int
+sumatoria' [] t = 0
+sumatoria' (x:xs) t = (t x) + (sumatoria' xs t)
+--Ejercicio 4-c
+
+productoria' :: [a] -> (a -> Int) -> Int
+productoria' [] t = 1
+productoria' (x:xs) t = (t x) * (productoria' xs t)
+--Ejercicio 4-d
+
+paraTodo :: [Bool] -> Bool
+paraTodo (xs) =  paratodo' (xs) (==True)
+--Ejercicio 5
+
+
+esPar :: Int -> Bool
+esPar x = (mod x 2) == 0
+
+todosPares :: [Int] -> Bool
+todosPares xs = paratodo' (xs) (esPar) 
+--Ejercicio 6-a
+
+esMultiplo :: Int -> Int -> Bool
+esMultiplo y z = (mod y z) == 0
+
+hayMultiplo :: Int -> [Int] -> Bool
+hayMultiplo y xs = existe' (xs) (esMultiplo y)
+--Ejercicio 6-b
