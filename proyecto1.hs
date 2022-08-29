@@ -1,12 +1,10 @@
 esCero :: Int -> Bool
-esCero x |x == 0 = True
-         |otherwise = False 
+esCero x = x == 0 
 --Ejercicio 1-a
 
 
 esPositivo :: Int -> Bool
-esPositivo x |x > 0 = True
-             |otherwise = False
+esPositivo x = x > 0 
 --Ejercicio 1-b
 
 
@@ -141,3 +139,31 @@ filtraPares' (x:xs) | (mod x 2) == 0 = x : (filtraPares' xs)
 --filtraPares :: [Int] -> [Int]
 --filtraPares xs = filter (esPar) xs
 --Ejercicio 9-b
+
+
+primIgualesA :: Eq a => a -> [a] -> [a]
+primIgualesA n [] = []
+primIgualesA n (x:xs) | x == n = x : (primIgualesA n xs)
+                      | otherwise = []
+--Ejercicio 10-a
+
+
+primIgualesA' :: Eq a => a -> [a] -> [a]
+primIgualesA' n xs = takeWhile (== n) xs
+--Ejercicio 10-b
+
+
+primIguales :: Eq a => [a] -> [a]
+primIguales [] = []
+primIguales (x:[]) = [x]  
+primIguales (y:(x:xs)) | y == x = x : (primIguales (y:(xs)))
+                       | otherwise = [y]
+--Ejercicio 11-a
+
+
+primIguales' :: Eq a => [a] -> [a]
+primIguales' [] = []
+primIguales' (x:xs) = primIgualesA' x (x:xs) 
+--Ejercicio 11-b
+
+--13-a ya probe y esta bien
