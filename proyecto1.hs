@@ -194,32 +194,32 @@ productoria4 xs t = cuantGen (*) (1) xs t
 
 
 
---13-a Está bien tipado y el patron cubre todos los casos. x tiene tipo a e y tiene tipo b.
+--13-a Está bien tipado y el patron cubre todos los casos. x tiene tipo a e y tiene tipo b. (x,y) tipo (a,b)
 
 
 --13-b Está mal tipado, la función debería tomar una lista de tuplas pero en su definición toma una tupla.
 
 
 --13-c Está bien tipado pero el patrón no cumbre el caso de lista vacía.
--- x es de tipo (a,b) y xs [(a,b)]
+-- x es de tipo (a,b) y xs [(a,b)]. (x:xs) tipo (a,b):[(a,b)]
 
 
 --13-d También está bien tipado pero no cumbre el caso de la lista con una sola tupla ni el caso lista vacía.
--- x tipo a, y tipo b, a tipo a, b tipo b, xs tipo [(a,b)]
+-- x tipo a, y tipo b, a tipo a, b tipo b, xs tipo [(a,b)].  ((x, y) : ((a, b) : xs)) tipo ((a,b): ((a,b):[(a,b)]))
 
 
 --13-e Bien tipado pero el patrón cubre sólo el caso en que el primer lugar de la tupla es 0 y es la única tupla de la lista. 
--- 0 tipo Int, a tipo a
+-- 0 tipo Int, a tipo a. [(0, a)] tipo [(Int,a)]
 
 
 --13-f Mal tipado porque si no pone "(Int,Int)" es porque a no es de tipo Int y luego en la definición usa un  Int en ese lugar asociado con a.
 --Interpretación 2: a se deja así para que haskell infiera el tipo y estaría bien tipado. Pero sin cubrir todos los casos:
 --Ahí cubre solo el caso donde la primera tupla de la lista es (x,1), deja fuera la lista vacía y todas las que no sean así.
--- x tipo Int, 1 tipo Int, xs tipo [(Int,a)]
+-- x tipo Int, 1 tipo Int, xs tipo [(Int,a)]. ((x, 1) : xs) tipo  (Int,Int) : [(Int,Int)]
 
 
 --13-g Bien tipado y cubre todos los patrones.
--- a tipo (Int -> Int), b tipo Int
+-- a tipo (Int -> Int), b tipo Int. 
 
 
 --13-h Bien tipado pero el patrón sólo cubre el caso donde el segundo argumento es 3.
