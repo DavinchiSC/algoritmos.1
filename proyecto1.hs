@@ -104,11 +104,8 @@ factorial' n = productoria [1..n]
 --Ejercicio 6-d
 
 
-filtraPares :: [Int] -> [Int]
-filtraPares xs = filter (esPar) xs
-
 multiplicaPares :: [Int] -> Int
-multiplicaPares xs = productoria' (filtraPares xs) (*1)
+multiplicaPares xs = productoria' (filter even xs) (*1)
 --Ejercicio 6-e
 
 
@@ -129,16 +126,22 @@ duplicaLista' xs = map (*2) xs
 --Ejercicio 8-b
 
 
-filtraPares' :: [Int] -> [Int]
-filtraPares' [] = []
-filtraPares' (x:xs) | (mod x 2) == 0 = x : (filtraPares' xs)
-                    | otherwise = filtraPares' xs 
+filtraPares :: [Int] -> [Int]
+filtraPares [] = []
+filtraPares (x:xs) | (mod x 2) == 0 = x : (filtraPares xs)
+                    | otherwise = filtraPares xs 
 --Ejercicio 9-a
 
 
---filtraPares :: [Int] -> [Int]
---filtraPares xs = filter (esPar) xs
+filtraPares2 :: [Int] -> [Int]
+filtraPares2 xs = filter (esPar) xs
 --Ejercicio 9-b
+
+
+multiplicaPares2 :: [Int] -> Int
+multiplicaPares2 xs = productoria (filtraPares2 xs)
+--Ejercicio 9-c
+
 
 
 primIgualesA :: Eq a => a -> [a] -> [a]
@@ -165,5 +168,32 @@ primIguales' :: Eq a => [a] -> [a]
 primIguales' [] = []
 primIguales' (x:xs) = primIgualesA' x (x:xs) 
 --Ejercicio 11-b
+
+
+cuantGen :: (b -> b -> b) -> b -> [a] -> (a -> b) -> b
+cuantGen op z [] t = z
+cuantGen op z (x:xs) t = (t x) `op` (cuantGen op z xs t) 
+
+--Definiciones del Ej. 4:
+paratodo4 :: [a] -> (a -> Bool) -> Bool
+paratodo4 xs t = cuantGen (&&) (True) xs t 
+
+
+existe4 :: [a] -> (a -> Bool) -> Bool
+existe4 xs t = cuantGen (||) (False) xs t
+
+
+sumatoria4 :: [a] -> (a -> Int) -> Int
+sumatoria4 xs t = cuantGen (+) (0) xs t 
+
+
+
+productoria4 :: [a] -> (a -> Int) -> Int
+productoria4 xs t = cuantGen (*) (1) xs t 
+
+
+--Ejercicio 12
+
+
 
 --13-a ya probe y esta bien
