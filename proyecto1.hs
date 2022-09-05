@@ -143,7 +143,6 @@ multiplicaPares2 xs = productoria (filtraPares2 xs)
 --Ejercicio 9-c
 
 
-
 primIgualesA :: Eq a => a -> [a] -> [a]
 primIgualesA n [] = []
 primIgualesA n (x:xs) | x == n = x : (primIgualesA n xs)
@@ -170,6 +169,8 @@ primIguales' (x:xs) = primIgualesA' x (x:xs)
 --Ejercicio 11-b
 
 
+--Ejercicio 12:
+
 cuantGen :: (b -> b -> b) -> b -> [a] -> (a -> b) -> b
 cuantGen op z [] t = z
 cuantGen op z (x:xs) t = (t x) `op` (cuantGen op z xs t) 
@@ -187,13 +188,64 @@ sumatoria4 :: [a] -> (a -> Int) -> Int
 sumatoria4 xs t = cuantGen (+) (0) xs t 
 
 
-
 productoria4 :: [a] -> (a -> Int) -> Int
 productoria4 xs t = cuantGen (*) (1) xs t 
 
 
---Ejercicio 12
+
+
+--13-a Está bien tipado y el patron cubre todos los casos. x tiene tipo a e y tiene tipo b.
+
+
+--13-b Está mal tipado, la función debería tomar una lista de tuplas pero en su definición toma una tupla.
+
+
+--13-c Está bien tipado pero el patrón no cumbre el caso de lista vacía.
+-- x es de tipo (a,b) y xs [(a,b)]
+
+
+--13-d También está bien tipado pero no cumbre el caso de la lista con una sola tupla ni el caso lista vacía.
+-- x tipo a, y tipo b, a tipo a, b tipo b, xs tipo [(a,b)]
+
+
+--13-e Bien tipado pero el patrón cubre sólo el caso en que el primer lugar de la tupla es 0 y es la única tupla de la lista. 
+-- 0 tipo Int, a tipo a
+
+
+--13-f Mal tipado porque si no pone "(Int,Int)" es porque a no es de tipo Int y luego en la definición usa un  Int en ese lugar asociado con a.
+--Interpretación 2: a se deja así para que haskell infiera el tipo y estaría bien tipado. Pero sin cubrir todos los casos:
+--Ahí cubre solo el caso donde la primera tupla de la lista es (x,1), deja fuera la lista vacía y todas las que no sean así.
+-- x tipo Int, 1 tipo Int, xs tipo [(Int,a)]
+
+
+--13-g Bien tipado y cubre todos los patrones.
+-- a tipo (Int -> Int), b tipo Int
+
+
+--13-h Bien tipado pero el patrón sólo cubre el caso donde el segundo argumento es 3.
+-- a tipo (Int -> Int), 3 tipo Int
+
+
+--13-i Mal  tipado, se están pasando 3 argumentos a una función que sólo toma 2 y el 0 (Int) no coincide con (Int -> Int) que es lo que espera la función.
 
 
 
---13-a ya probe y esta bien
+--14:
+--a) f :: (a, b) -> b
+--   f (x,y) = y
+
+
+--b) f :: (a, b) -> c
+--   f (a,b) = [a]
+
+
+--c) f :: (a -> b) -> a -> b
+--   f t x = t x  
+
+
+--d) f :: (a -> b) -> [a] -> [b]
+--   f t xs = map t xs 
+
+
+--e) f :: (a -> b) -> (b -> c) -> a -> c
+--   f t y x = y (t x)
