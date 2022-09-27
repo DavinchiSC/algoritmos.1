@@ -73,8 +73,8 @@ productoria' (x:xs) t = (t x) * (productoria' xs t)
 --Ejercicio 4-d
 
 
-paraTodo :: [Bool] -> Bool
-paraTodo (xs) =  paratodo' (xs) (==True)
+paratodo'' :: [Bool] -> Bool
+paratodo'' (xs) =  paratodo' (xs) (==True)
 --Ejercicio 5
 
 
@@ -100,7 +100,7 @@ sumaCuadrados x = sumatoria' [0..x] (^2)
 
 
 factorial' :: Int -> Int
-factorial' n = productoria [1..n]
+factorial' n = productoria' [1..n] (*1)
 --Ejercicio 6-d
 
 
