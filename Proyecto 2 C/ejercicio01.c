@@ -20,4 +20,5 @@ int main (void){
     x = pedirEntero();
     assert (x>0);
     holaHasta(x);
+    return 0;
 }
