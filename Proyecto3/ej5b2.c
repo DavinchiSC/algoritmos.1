@@ -13,5 +13,6 @@ int main (void) {
         printf ("iteracion %d: x = %d, i = %d, res = %d\n", i-2,x,i,res);
     }
     printf ("valores finales: x = %d, i = %d, res = %d\n", x,i,res);
+    return 0;
 
 }    
