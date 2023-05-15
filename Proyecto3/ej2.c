@@ -13,5 +13,5 @@ int main(void) {
     scanf("%d", &b);
     printf("ingrese el valor de w \n");
     scanf("%d", &w);
-    
+    return 0;
 }
