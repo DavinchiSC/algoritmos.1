@@ -116,12 +116,12 @@ existeDivisor n xs = existe' xs (esDiv n)
 --e
 
 esPrimo:: Int -> Bool
-esPrimo x = (x > 1) && not (existeDivisor x [2..(x-1)])
+esPrimo x = (x > 1) && not (existe' [2..x-1] (esDiv x))
 
 --f
 
 factorial' :: Int -> Int
-factorial' n = productoria [1..n]
+factorial' n = productoria' [1..n] (*1)
 
 --g
 
@@ -131,7 +131,7 @@ filtraPrimos (x:xs) |esPrimo x = x : (filtraPrimos xs)
                     |otherwise = filtraPrimos xs
 
 multiplicaPrimos :: [Int] -> Int
-multiplicaPrimos xs = productoria (filtraPrimos xs) 
+multiplicaPrimos xs = productoria' (filtraPrimos xs) (*1)
 
 --h
 
@@ -155,3 +155,73 @@ fiblimite (x,y) | (fib x) < y = fiblimite (x+1,y)
 
 esFib :: Int -> Bool
 esFib x = existe' (fibLista (-1,1) (fiblimite(1,x))) (==x)
+
+--i
+
+todosFib :: [Int] -> Bool
+todosFib xs = paratodo' xs (esFib)
+
+--Ejercicio 7
+--La función map toma una lista, una función que pueda ser aplicada a los elementos de esa lista y devuelve otra lista con los elementos de la original afectados por la funcion dada.
+--La función filter toma una lista, un predicado y devuelve la lista conformada por los elementos de la lista original que hayan cumplido con el predicado.
+--map succ [1, -4, 6, 2, -8] es equivalente a la lista [2,-3,7,3,-7], donde la función map se encarga de aplicar succ (sumar 1) a cada elemento de la lista.
+--filter esPositivo [1, -4, 6, 2, -8] equivale a la lista [1,6,2], filter se encarga de quedarse con los elementos que cumplan "esPositivo" y eliminar los que no.
+
+--Ejercicio 8
+--a
+
+duplicaLista :: [Int] -> [Int]
+duplicaLista [] = []
+duplicaLista (x:xs) = 2*x : (duplicaLista xs)
+
+--b
+
+duplicaLista' :: [Int] -> [Int]
+duplicaLista' xs = map (*2) xs
+
+--Ejercicio 9
+--a
+
+--La definí en el punto 6 g como funcion auxiliar:
+--filtraPrimos :: [Int] -> [Int]
+--filtraPrimos [] = []
+--filtraPrimos (x:xs) |esPrimo x = x : (filtraPrimos xs)
+--                    |otherwise = filtraPrimos xs
+
+--b
+
+filtraPrimos' :: [Int] -> [Int]
+filtraPrimos' xs = filter (esPrimo) xs
+
+--c
+
+multiplicaPrimos' :: [Int] -> Int
+multiplicaPrimos' xs = productoria' (filtraPrimos' xs ) (*1)
+
+--Ejercicio 10
+--a
+
+primIgualesA :: Eq a => a -> [a] -> [a]
+primIgualesA e [] = []
+primIgualesA e (x:xs) | e == x = x : (primIgualesA e xs)
+                      | otherwise = []
+
+--b
+
+primIgualesA' :: Eq a => a -> [a] -> [a]
+primIgualesA' e xs = takeWhile (==e) xs 
+
+--Ejercicio 11
+--a
+
+primIguales :: Eq a => [a] -> [a]
+primIguales [] = []
+primIguales [x] = [x]
+primIguales (x:(y:xs)) | y == x = y : (primIguales (x:xs))
+                       | otherwise = primIguales [x]
+
+--b
+
+primIguales' :: Eq a => [a] -> [a]
+primIguales' [] = []
+primIguales' (x:xs) = primIgualesA' x (x:xs)
