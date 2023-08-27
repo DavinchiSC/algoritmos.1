@@ -125,10 +125,33 @@ factorial' n = productoria [1..n]
 
 --g
 
+filtraPrimos :: [Int] -> [Int]
+filtraPrimos [] = []
+filtraPrimos (x:xs) |esPrimo x = x : (filtraPrimos xs)
+                    |otherwise = filtraPrimos xs
+
 multiplicaPrimos :: [Int] -> Int
-multiplicaPrimos [] = 1
-multiplicaPrimos (x:xs) | esPrimo x = x * multiplicaPrimos xs
-                        | otherwise = multiplicaPrimos xs
+multiplicaPrimos xs = productoria (filtraPrimos xs) 
 
 --h
 
+fibLista :: (Int,Int) -> Int -> [Int]
+fibLista (a,b) 0 = []
+fibLista (a,b) n = (a + b) : (fibLista (b, a + b) (n - 1))
+
+--prueba
+-- -1+1 : fib (1,0)
+-- = 1-1 : 1+0 : fib (0,1)
+-- = 1-1 : 1+0 : 0+1 : fib (1,1)... 
+
+fib :: Int -> Int
+fib n = (fibLista (-1,1) n)!!(n-1)
+
+fiblimite :: (Int,Int) -> Int 
+fiblimite (x,y) | (fib x) < y = fiblimite (x+1,y)     
+                | (fib x) >= y = x
+            
+-- esta funcion la hice para poder comparar y que corte cuando encuentre el número o al superarlo.
+
+esFib :: Int -> Bool
+esFib x = existe' (fibLista (-1,1) (fiblimite(1,x))) (==x)
