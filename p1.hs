@@ -225,3 +225,38 @@ primIguales (x:(y:xs)) | y == x = y : (primIguales (x:xs))
 primIguales' :: Eq a => [a] -> [a]
 primIguales' [] = []
 primIguales' (x:xs) = primIgualesA' x (x:xs)
+
+--Ejercicio 12
+
+cuantGen :: (b -> b -> b) -> b -> [a] -> (a -> b) -> b
+cuantGen op z [] t = z
+cuantGen op z (x:xs) t = op (t x) (cuantGen op z xs t)
+
+--Definiciones del ejercicio 4 con cuantGen
+
+paratodoGen :: [a] -> (a -> Bool) -> Bool
+paratodoGen xs t = cuantGen (&&) (True) xs t 
+
+existeGen :: [a] -> (a -> Bool) -> Bool
+existeGen xs t = cuantGen (||) (False) xs t
+
+sumatoriaGen :: [a] -> (a -> Int) -> Int
+sumatoriaGen xs t = cuantGen (+) (0) xs t
+
+productoriaGen :: [a] -> (a -> Int) -> Int
+productoriaGen xs t = cuantGen (*) (1) xs t
+
+--Ejercicio 13
+
+distanciaEdicion :: [Char] -> [Char] -> Int
+distanciaEdicion [] ys = length ys
+distanciaEdicion xs [] = length xs
+distanciaEdicion (x:xs) (y:ys) | x == y = distanciaEdicion xs ys
+                               | otherwise = 1 + distanciaEdicion xs ys
+
+--Ejercicio 14
+
+primQueCumplen :: [a] -> (a -> Bool) -> [a]
+primQueCumplen [] p = []
+primQueCumplen (x:xs) p | p x = x : (primQueCumplen xs p)
+                        | otherwise = []
