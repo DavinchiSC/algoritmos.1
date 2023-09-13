@@ -80,12 +80,12 @@ True
 
 type Altura = Int
 type NumCamiseta = Int
-data Zona = Arco | Defensa | Mediocampo | Delantera
-data TipoReves = DosManos | UnaMano
-data Modalidad = Carretera | Pista | Monte | BMX
-data PiernaHabil = Izquierda | Derecha
+data Zona = Arco | Defensa | Mediocampo | Delantera deriving Show
+data TipoReves = DosManos | UnaMano deriving Show
+data Modalidad = Carretera | Pista | Monte | BMX deriving Show
+data PiernaHabil = Izquierda | Derecha deriving Show
 type ManoHabil = PiernaHabil
-data Deportista = Ajedrecista | Ciclista Modalidad | Velocista Altura | Tenista TipoReves ManoHabil Altura | Futbolista Zona NumCamiseta PiernaHabil Altura
+data Deportista = Ajedrecista | Ciclista Modalidad | Velocista Altura | Tenista TipoReves ManoHabil Altura | Futbolista Zona NumCamiseta PiernaHabil Altura deriving Show
 
 --b: Ciclista :: Modaliad -> Deportista
 
@@ -202,4 +202,61 @@ False
 -}
 
 --Ejercicio 6
+--a
 
+primerElemento :: [a] -> Maybe a
+primerElemento [] = Nothing
+primerElemento (x:xs) = Just x
+
+{-
+ghci> primerElemento []
+Nothing
+ghci> primerElemento [3,0,8,4]
+Just 3
+-}
+
+--Ejercicio 7
+
+data Cola = VaciaC | Encolada Deportista Cola deriving Show
+
+--a.1
+
+atender :: Cola -> Maybe Cola
+atender VaciaC = Nothing
+atender (Encolada a cs) = Just cs
+
+{-
+ghci> atender (Encolada Ajedrecista (Encolada (Velocista 181) (Encolada (Ciclista BMX) VaciaC)))
+Just (Encolada (Velocista 181) (Encolada (Ciclista BMX) VaciaC))
+ghci> atender (Encolada Ajedrecista (Encolada (Velocista 181) (Encolada (Ciclista BMX) (Encolada (Futbolista Arco 1 Derecha 197) VaciaC))))
+Just (Encolada (Velocista 181) (Encolada (Ciclista BMX) (Encolada (Futbolista Arco 1 Derecha 197) VaciaC)))
+-}
+
+--a.2
+
+encolar :: Deportista -> Cola -> Cola
+encolar a VaciaC = Encolada a VaciaC
+encolar a (Encolada b cs) = Encolada b (encolar a cs)
+
+{-
+ghci> encolar Ajedrecista (Encolada Ajedrecista (Encolada (Velocista 181) (Encolada (Ciclista BMX) (Encolada (Futbolista Arco 1 Derecha 197) VaciaC))))
+Encolada Ajedrecista (Encolada (Velocista 181) (Encolada (Ciclista BMX) (Encolada (Futbolista Arco 1 Derecha 197) (Encolada Ajedrecista VaciaC))))
+ghci> encolar (Velocista 165 ) (Encolada Ajedrecista (Encolada (Velocista 181) (Encolada (Ciclista BMX) (Encolada (Futbolista Arco 1 Derecha 197) VaciaC))))
+Encolada Ajedrecista (Encolada (Velocista 181) (Encolada (Ciclista BMX) (Encolada (Futbolista Arco 1 Derecha 197) (Encolada (Velocista 165) VaciaC))))
+-}
+
+--a.3
+
+busca :: Cola -> Zona -> Maybe Deportista
+busca VaciaC z = Nothing
+busca (Encolada f cs) z | mismaZona z  f = Just f
+                        | otherwise = busca cs z
+
+{-
+ghci> busca (Encolada Ajedrecista (Encolada (Velocista 181) (Encolada (Ciclista BMX) (Encolada (Futbolista Arco 1 Derecha 197) VaciaC)))) Arco
+Just (Futbolista Arco 1 Derecha 197)
+ghci> busca (Encolada (Futbolista Defensa 5 Derecha 169) (Encolada Ajedrecista (Encolada (Velocista 181) (Encolada (Ciclista BMX) (Encolada (Futbolista Arco 1 Derecha 197) VaciaC))))) Defensa
+Just (Futbolista Defensa 5 Derecha 169)
+-}
+
+--b: El tipo cola se parece al tipo Lista de deportistas ([Deportista])
