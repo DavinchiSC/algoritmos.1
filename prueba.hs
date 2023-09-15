@@ -128,3 +128,29 @@ soloPares' xs = filter esPar xs
 multiplicaPares' :: [Int] -> Int
 multiplicaPares' xs = productoria (filter esPar xs)
 
+
+
+iguales :: Eq a => [a] -> Bool
+iguales [] = True
+iguales [x] = True
+iguales (x:y:ys) = x == y && iguales (y:ys)
+
+mult :: Int -> Int -> Int
+mult a  0 = 0
+mult a b =  a + (mult a (b-1))
+
+
+f :: Int -> Int 
+f 0 = 0
+f x = mult x (mult x x)
+
+creciente :: [Int] -> Bool
+creciente [] = True
+creciente [x] = True
+creciente (x:y:ys) = x <= y && creciente (y:ys)
+
+
+prod  :: [Int] -> [Int] -> Int 
+prod [] ys = 0
+prod xs [] = 0
+prod (x:xs) (y:ys) = x * y + (prod xs ys) 
