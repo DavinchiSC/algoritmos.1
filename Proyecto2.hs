@@ -260,3 +260,91 @@ Just (Futbolista Defensa 5 Derecha 169)
 -}
 
 --b: El tipo cola se parece al tipo Lista de deportistas ([Deportista])
+
+
+--Ejercicio  8
+
+data ListaAsoc a b = Vacia | Nodo a b ( ListaAsoc a b ) deriving Show
+
+--a: type guia = ListaAsoc String Int
+
+--b.1
+
+la_long :: ListaAsoc a b -> Int
+la_long Vacia = 0
+la_long (Nodo a b xs) = 1 + la_long xs
+
+{-
+ghci> la_long (Nodo "David Cortes" 42511605 (Nodo "Rocio Sanchez" 41562388 (Vacia)))
+2
+ghci> la_long Vacia
+0
+-}
+
+--b.2
+
+la_concat :: ListaAsoc a b -> ListaAsoc a b -> ListaAsoc a b
+la_concat Vacia ys = ys
+la_concat (Nodo a b  xs) ys = Nodo a b (la_concat xs ys)
+
+{-
+ghci> la_concat (Nodo "David Cortes" 42511605 (Nodo "Rocio Sanchez" 41562388 (Vacia))) (Nodo "Juan Musk" 26961545 (Nodo "Victor Gonzalez" 39562388 (Vacia)))
+Nodo "David Cortes" 42511605 (Nodo "Rocio Sanchez" 41562388 (Nodo "Juan Musk" 26961545 (Nodo "Victor Gonzalez" 39562388 Vacia)))
+ghci> la_concat (Nodo "David Cortes" 42511605 (Nodo "Rocio Sanchez" 41562388 (Vacia))) Vacia
+Nodo "David Cortes" 42511605 (Nodo "Rocio Sanchez" 41562388 Vacia)
+-}
+
+--b.3
+
+la_agregar :: Eq a => ListaAsoc a b -> a -> b -> ListaAsoc a b
+la_agregar Vacia a b = Nodo a b Vacia
+la_agregar (Nodo a b xs) c d | a == c = Nodo a d xs
+                             | otherwise = Nodo a b (la_agregar xs c d) 
+
+{-
+ghci> la_agregar (Nodo "Juan Musk" 26961545 (Nodo "Victor Gonzalez" 39562388 (Vacia))) "as" 5
+Nodo "Juan Musk" 26961545 (Nodo "Victor Gonzalez" 39562388 (Nodo "as" 5 Vacia))
+ghci> la_agregar (Nodo "Juan Musk" 26961545 (Nodo "Victor Gonzalez" 39562388 (Vacia))) ("Juan Musk") 27988336
+Nodo "Juan Musk" 27988336 (Nodo "Victor Gonzalez" 39562388 Vacia)
+-}
+
+--b.4
+
+la_pares :: ListaAsoc a b -> [(a, b)]
+la_pares Vacia = []
+la_pares (Nodo a b xs) = (a, b) : la_pares xs
+
+{-
+ghci> la_pares (Nodo "Juan Musk" 26961545 (Nodo "Victor Gonzalez" 39562388 (Nodo "as" 5 Vacia)))
+[("Juan Musk",26961545),("Victor Gonzalez",39562388),("as",5)]
+ghci> la_pares (Nodo "David Cortes" 42511605 (Nodo "Rocio Sanchez" 41562388 (Vacia)))
+[("David Cortes",42511605),("Rocio Sanchez",41562388)]
+-}
+
+--b.5
+
+la_busca :: Eq a => ListaAsoc a b -> a -> Maybe b
+la_busca Vacia a = Nothing
+la_busca (Nodo a b xs) x | a == x = Just b
+                         | otherwise = la_busca xs x
+
+{-
+ghci> la_busca (Nodo "David Cortes" 42511605 (Nodo "Rocio Sanchez" 41562388 (Vacia))) "David Cortes"
+Just 42511605
+ghci> la_busca Vacia "a"
+Nothing
+-}
+
+--b.6
+
+la_borrar :: Eq a => a -> ListaAsoc a b -> ListaAsoc a b
+la_borrar a Vacia = Vacia
+la_borrar a (Nodo x y xs) | a == x = xs
+                          | otherwise = Nodo x y (la_borrar a xs)
+
+{-
+ghci> la_borrar "Rocio Sanchez" (Nodo "David Cortes" 42511605 (Nodo "Rocio Sanchez" 41562388 (Nodo "Juan Musk" 26961545 (Nodo "Victor Gonzalez" 39562388 Vacia))))
+Nodo "David Cortes" 42511605 (Nodo "Juan Musk" 26961545 (Nodo "Victor Gonzalez" 39562388 Vacia))
+ghci> la_borrar "Alicia" (Nodo "Alicia" 6550 Vacia)
+Vacia
+-}
