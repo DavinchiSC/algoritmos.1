@@ -348,3 +348,127 @@ Nodo "David Cortes" 42511605 (Nodo "Juan Musk" 26961545 (Nodo "Victor Gonzalez" 
 ghci> la_borrar "Alicia" (Nodo "Alicia" 6550 Vacia)
 Vacia
 -}
+
+--Ejercicio 9
+
+data Arbol a = Hoja | Rama ( Arbol a ) a ( Arbol a ) deriving Show
+
+--a
+
+a_long :: Arbol a -> Int
+a_long Hoja = 0
+a_long (Rama x a y) = 1 + (a_long x + a_long y)
+
+{-
+ghci> a_long (Rama Hoja "hola" (Rama Hoja "Chau" Hoja))
+2
+ghci> a_long (Rama (Rama Hoja "Hijo" (Rama Hoja "Nieto1" Hoja)) "Señor" (Rama Hoja "Hija" (Rama Hoja "Nieto2" Hoja)))
+5
+-}
+
+--b
+
+a_hojas :: Arbol a -> Int
+a_hojas Hoja = 1
+a_hojas (Rama x a y) = a_hojas x + a_hojas y
+
+{-
+ghci> a_hojas (Rama (Rama Hoja "Hijo" (Rama Hoja "Nieto1" Hoja)) "Señor" (Rama Hoja "Hija" (Rama Hoja "Nieto2" Hoja)))
+6
+ghci> a_hojas (Rama (Rama (Rama (Rama Hoja "Cubos" Hoja) "Al horno" (Rama Hoja "Rodajas" Hoja)) "Cocinada" (Rama (Rama Hoja "Rejilla" Hoja) "Frita" (Rama Hoja "Baston" Hoja))) "Papa"  (Rama Hoja "Cruda" (Rama Hoja "Nada" Hoja)))
+11
+-}
+
+--c
+
+a_inc :: Num a => Arbol a -> Arbol a
+a_inc Hoja = Hoja
+a_inc (Rama a x b) = Rama (a_inc a) (x+1) (a_inc b)
+
+{-
+ghci> a_inc (Rama (Rama (Rama (Rama Hoja 3 Hoja) 5 (Rama Hoja 7 Hoja)) 6 (Rama (Rama Hoja 4 Hoja) 1  (Rama Hoja 3 Hoja))) 2  (Rama Hoja 0 (Rama Hoja 8 Hoja)))
+Rama (Rama (Rama (Rama Hoja 4 Hoja) 6 (Rama Hoja 8 Hoja)) 7 (Rama (Rama Hoja 5 Hoja) 2 (Rama Hoja 4 Hoja))) 3 (Rama Hoja 1 (Rama Hoja 9 Hoja))
+ghci> a_inc (Rama (Rama (Rama (Rama Hoja 1 Hoja) 2 (Rama Hoja 3 Hoja)) 4 (Rama (Rama Hoja 5 Hoja) 6 (Rama Hoja 7 Hoja))) 8  (Rama Hoja 9 (Rama Hoja 10 Hoja)))
+Rama (Rama (Rama (Rama Hoja 2 Hoja) 3 (Rama Hoja 4 Hoja)) 5 (Rama (Rama Hoja 6 Hoja) 7 (Rama Hoja 8 Hoja))) 9 (Rama Hoja 10 (Rama Hoja 11 Hoja))
+-}
+
+--d
+
+a_map :: (a -> b) -> Arbol a -> Arbol b
+a_map t Hoja = Hoja
+a_map t (Rama a x b) = Rama (a_map t a) (t x) (a_map t b)
+
+{-
+ghci> a_map (+1) (Rama (Rama (Rama (Rama Hoja 3 Hoja) 5 (Rama Hoja 7 Hoja)) 6 (Rama (Rama Hoja 4 Hoja) 1  (Rama Hoja 3 Hoja))) 2  (Rama Hoja 0 (Rama Hoja 8 Hoja)))
+Rama (Rama (Rama (Rama Hoja 4 Hoja) 6 (Rama Hoja 8 Hoja)) 7 (Rama (Rama Hoja 5 Hoja) 2 (Rama Hoja 4 Hoja))) 3 (Rama Hoja 1 (Rama Hoja 9 Hoja))
+-}
+
+a_inc' :: Num a => Arbol a -> Arbol a
+a_inc' a = a_map (+1) a
+
+{-
+ghci> a_inc' (Rama (Rama (Rama (Rama Hoja 3 Hoja) 5 (Rama Hoja 7 Hoja)) 6 (Rama (Rama Hoja 4 Hoja) 1  (Rama Hoja 3 Hoja))) 2  (Rama Hoja 0 (Rama Hoja 8 Hoja)))
+Rama (Rama (Rama (Rama Hoja 4 Hoja) 6 (Rama Hoja 8 Hoja)) 7 (Rama (Rama Hoja 5 Hoja) 2 (Rama Hoja 4 Hoja))) 3 (Rama Hoja 1 (Rama Hoja 9 Hoja))
+-}
+
+--Ejercicio 10
+--a
+
+data ABB a = VacioABB | RamaABB (ABB a) a (ABB a) deriving Show
+
+--b
+
+insertarABB :: Ord a => a -> ABB a -> ABB a
+insertarABB x VacioABB = RamaABB VacioABB x VacioABB
+insertarABB x (RamaABB a y b) | x < y = RamaABB (insertarABB x a) y b
+                              | otherwise = RamaABB a y (insertarABB x b)
+
+{-
+ghci> insertarABB 5 (RamaABB (RamaABB  (RamaABB  VacioABB 7 VacioABB)  8 (RamaABB  VacioABB 9 VacioABB)) 10 (RamaABB  (RamaABB VacioABB 11 VacioABB) 12 (RamaABB VacioABB 13 VacioABB)))
+RamaABB (RamaABB (RamaABB (RamaABB VacioABB 5 VacioABB) 7 VacioABB) 8 (RamaABB VacioABB 9 VacioABB)) 10 (RamaABB (RamaABB VacioABB 11 VacioABB) 12 (RamaABB VacioABB 13 VacioABB))
+ghci> insertarABB 6 (RamaABB (RamaABB (RamaABB (RamaABB VacioABB 5 VacioABB) 7 VacioABB) 8 (RamaABB VacioABB 9 VacioABB)) 10 (RamaABB (RamaABB VacioABB 11 VacioABB) 12 (RamaABB VacioABB 13 VacioABB)))
+RamaABB (RamaABB (RamaABB (RamaABB VacioABB 5 (RamaABB VacioABB 6 VacioABB)) 7 VacioABB) 8 (RamaABB VacioABB 9 VacioABB)) 10 (RamaABB (RamaABB VacioABB 11 VacioABB) 12 (RamaABB VacioABB 13 VacioABB))
+-}
+
+--c
+
+buscarABB :: Eq a => a -> ABB a -> Bool
+buscarABB x VacioABB = False
+buscarABB x (RamaABB a y b) | x == y = True
+                            | otherwise = buscarABB x a || buscarABB x b 
+
+{-
+ghci> buscarABB  3 (RamaABB (RamaABB (RamaABB (RamaABB VacioABB 5 VacioABB) 7 VacioABB) 8 (RamaABB VacioABB 9 VacioABB)) 10 (RamaABB (RamaABB VacioABB 11 VacioABB) 12 (RamaABB VacioABB 13 VacioABB)))
+False
+ghci> buscarABB  11 (RamaABB (RamaABB (RamaABB (RamaABB VacioABB 5 VacioABB) 7 VacioABB) 8 (RamaABB VacioABB 9 VacioABB)) 10 (RamaABB (RamaABB VacioABB 11 VacioABB) 12 (RamaABB VacioABB 13 VacioABB)))
+True
+-}
+
+--d
+
+mayor_a_todos :: Ord a => a -> ABB a -> Bool
+mayor_a_todos x VacioABB = True
+mayor_a_todos x (RamaABB a y b) = (x > y)  && (mayor_a_todos x a) && (mayor_a_todos x b)
+
+menor_a_todos :: Ord a => a -> ABB a -> Bool
+menor_a_todos x VacioABB = True
+menor_a_todos x (RamaABB a y b) = (x < y) && (menor_a_todos x a) && (menor_a_todos x b) 
+
+verificarABB :: Ord a => ABB a -> Bool
+verificarABB VacioABB = True
+verificarABB (RamaABB a x b) = (mayor_a_todos x a) && (menor_a_todos x b)
+
+ejemplo1 = RamaABB (RamaABB VacioABB 10 VacioABB) 2 (RamaABB VacioABB 11 VacioABB)
+ejemplo2 = RamaABB (RamaABB  (RamaABB VacioABB 1 VacioABB) 3 (RamaABB VacioABB 7 VacioABB)) 5 (RamaABB VacioABB 8 (RamaABB VacioABB 10 VacioABB))
+ejemplo3 = (RamaABB (RamaABB (RamaABB (RamaABB VacioABB 5 VacioABB) 7 VacioABB) 8 (RamaABB VacioABB 9 VacioABB)) 10 (RamaABB (RamaABB VacioABB 11 VacioABB) 12 (RamaABB VacioABB 13 VacioABB)))
+ejemplo4 = (RamaABB (RamaABB (RamaABB (RamaABB VacioABB 1 VacioABB) 7 VacioABB) 8 (RamaABB VacioABB 9 VacioABB)) 10 (RamaABB (RamaABB VacioABB 4 VacioABB) 12 (RamaABB VacioABB 13 VacioABB)))
+{-
+ghci> verificarABB ejemplo1
+False
+ghci> verificarABB ejemplo2
+False
+ghci> verificarABB ejemplo3
+True
+ghci> verificarABB ejemplo4
+False
+-}
