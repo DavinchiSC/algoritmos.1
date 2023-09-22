@@ -154,3 +154,11 @@ prod  :: [Int] -> [Int] -> Int
 prod [] ys = 0
 prod xs [] = 0
 prod (x:xs) (y:ys) = x * y + (prod xs ys) 
+
+gfi :: Int -> [Int] -> Int
+gfi n [] = minBound
+gfi n (x:xs) | n == (sumatoria (x:xs)) = max 0 ((gfi (n+x) xs) + 1)
+             | otherwise = (gfi (n+x) xs) + 1
+
+fi ::  [Int] -> Int
+fi xs = gfi 0 xs
