@@ -8,15 +8,15 @@ bool pedir_booleano (char name) {
     a = temp;
     return a;
 }
-void imprimir_booleano (bool x) {
+void imprimir_booleano (char name, bool x) {
     if (x == false) {
-        printf("falso\n");
+        printf("%c = falso\n", name);
     }
     else {
-        printf("verdadero\n");
+        printf("%c = verdadero\n", name);
     }
 }
 int main (void) {
-    imprimir_booleano (pedir_booleano('b'));
+    imprimir_booleano ('b',pedir_booleano('b'));
     return 0;
 }

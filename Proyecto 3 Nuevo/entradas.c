@@ -1,6 +1,6 @@
 #include <stdio.h>
-void imprimir_entero (int x) {
-    printf("%d\n", x);
+void imprimir_entero (char name, int x) {
+    printf("%c = %d\n", name, x);
 }
 int pedir_entero (char name) {
     int x;
@@ -9,6 +9,6 @@ int pedir_entero (char name) {
     return x;
 }
 int main (void) {
-    imprimir_entero(pedir_entero('x'));
+    imprimir_entero('x',pedir_entero('x'));
     return 0;
 }

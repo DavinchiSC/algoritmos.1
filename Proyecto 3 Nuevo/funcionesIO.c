@@ -1,8 +1,8 @@
 /*
 PEDIR E IMPRIMIR ENTEROS:
 ----------------------------------------------------
-void imprimir_entero (int x) {
-    printf("%d\n", x);
+void imprimir_entero (char name, int x) {
+    printf("%c = %d\n", name, x);
 }
 int pedir_entero (char name) {
     int x;
@@ -22,12 +22,12 @@ bool pedir_booleano (char name) {
     a = temp;
     return a;
 }
-void imprimir_booleano (bool x) {
+void imprimir_booleano (char name, bool x) {
     if (x == false) {
-        printf("falso\n");
+        printf("%c = falso\n", name);
     }
     else {
-        printf("verdadero\n");
+        printf("%c = verdadero\n", name);
     }
 }
 ---------------------------------------------------

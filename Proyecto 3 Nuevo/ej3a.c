@@ -1,11 +1,18 @@
 #include <stdio.h>
+void imprimir_entero (char name, int x) {
+    printf("%c = %d\n", name, x);
+}
+int pedir_entero (char name) {
+    int x;
+    printf("ingrese un entero para %c\n", name);
+    scanf("%d", &x);
+    return x;
+}
 
 int main (void) {
     int x;
-    printf("Ingrese un valor para x\n");
-    scanf("%d", &x);
-    x = 5;
-    printf("x termina con un valor de %d\n", x);
+    x = pedir_entero('x');
+    imprimir_entero('x',x);
     return 0;
 }
 

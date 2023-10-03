@@ -1,13 +1,15 @@
 #include <stdio.h>
-
+int pedir_entero (char name) {
+    int x;
+    printf("ingrese un entero para %c\n", name);
+    scanf("%d", &x);
+    return x;
+}
 int main (void) {
     int x, y, z;
-    printf("Introduzca un valor para x\n");
-    scanf("%d", &x);
-    printf("Introduzca un valor para y\n");
-    scanf("%d", &y);
-    printf("Introduzca un valor para z\n");
-    scanf("%d", &z);
+    x = pedir_entero('x');
+    y = pedir_entero('y');
+    z = pedir_entero('z');
     printf("x + y + 1 = %d\n", x+y+1);
     printf("z * z + y * 45 - 15 * x = %d\n", z*z+y*45-15*x);
     printf("y - 2 == ((x * 3 + 1) %% 5) = %d\n", y-2 == (x*3+1)%5);
