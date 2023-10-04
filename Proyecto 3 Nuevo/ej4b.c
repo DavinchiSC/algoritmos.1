@@ -1,13 +1,19 @@
 #include <stdio.h>
 
+void imprimir_entero (char name, int x) {
+    printf("%c = %d\n", name, x);
+}
+int pedir_entero (char name) {
+    int x;
+    printf("ingrese un entero para %c\n", name);
+    scanf("%d", &x);
+    return x;
+}
 int main (void) {
     int x,y,z,m;
-    printf("Ingrese un valor para x\n");
-    scanf("%d", &x);
-    printf("Ingrese un valor para y\n");
-    scanf("%d", &y);
-    printf("Ingrese un valor para z\n");
-    scanf("%d", &z);
+    x = pedir_entero('x');
+    y = pedir_entero('y');
+    z = pedir_entero('z');
     if (x<y) {
         m = x;
     }
@@ -19,7 +25,7 @@ int main (void) {
     if (m>=z) {
             m = z;
         }
-    printf("m termina con un valor de %d\n", m);
+    imprimir_entero('m',m);
     return 0;
 }
 

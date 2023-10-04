@@ -1,17 +1,26 @@
 #include <stdio.h>
 #include <stdbool.h>
+
+void imprimir_entero (char name, int x) {
+    printf("%c = %d\n", name, x);
+}
+int pedir_entero (char name) {
+    int x;
+    printf("ingrese un entero para %c\n", name);
+    scanf("%d", &x);
+    return x;
+}
 int main (void) {
     int x,i;
     bool res;
-    printf("introduzca un valor para x\n");
-    scanf("%d", &x);
+    x = pedir_entero('x');
     i = 2;
     res = true;
     while (i<x && res) {
         res = res && ((x % i) != 0);
         i = i+1;
     }
-    printf("el resultado es %d\n", res);
+    imprimir_entero('r',res);
     return 0;
 }
 /*

@@ -1,10 +1,15 @@
 #include <stdio.h>
+
+int pedir_entero (char name) {
+    int x;
+    printf("ingrese un entero para %c\n", name);
+    scanf("%d", &x);
+    return x;
+}
 int main (void) {
     int i,x,y;
-    printf("introduzca un valor para x\n");
-    scanf("%d", &x);
-    printf("introduzca un valor para y\n");
-    scanf("%d", &y);
+    x = pedir_entero('x');
+    y = pedir_entero('y');
     i = 0;
     while (x>=y) {
         x = x-y;
