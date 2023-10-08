@@ -1,21 +1,16 @@
 #include <stdio.h>
-
-int pedir_entero (char name) {
-    int x;
-    printf("ingrese un entero para %c\n", name);
-    scanf("%d", &x);
-    return x;
-}
-int main (void) {
-    int i,x,y;
-    x = pedir_entero('x');
-    y = pedir_entero('y');
-    i = 0;
-    while (x>=y) {
-        x = x-y;
-        i = i+1;
-    }
-    return 0;
+int main(void)  {
+  int i, x, y;
+  i = 0;
+  printf("Introduzca el valor de la variable x\n");
+  scanf("%d",&x);
+  printf("Introduzca el valor de la variable y\n");
+  scanf("%d",&y);
+  while (x>=y)  {
+    x = x - y;
+    i = i + 1;
+  }
+  return 0;
 }
 /*
 estado luego de iterar 1: x --> 10, y --> 3, i --> 0.

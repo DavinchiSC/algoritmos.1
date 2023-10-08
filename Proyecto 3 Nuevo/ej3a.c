@@ -12,12 +12,13 @@ int pedir_entero (char name) {
 int main (void) {
     int x;
     x = pedir_entero('x');
+    x = 5;
     imprimir_entero('x',x);
     return 0;
 }
 
 /*
-Ejecucion 1: x = 1 -----> 5
-Ejecucion 2: x = 6 -----> 5
-Ejecucion 3: x = 2 -----> 5
+Ejecucion 1: x = 1 -----> x = 5
+Ejecucion 2: x = 6 -----> x = 5
+Ejecucion 3: x = 2 -----> x = 5
 */

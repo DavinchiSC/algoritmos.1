@@ -1,0 +1,2 @@
+Los ejercicios cuyo nombre empieza con "ejercicio..." son los originales y los que empiezan con "ej.." son después de reescribirlos con las funciones de pedir.
+Las respuestas que no son código están escritas como comentario en cada ejercicio.
