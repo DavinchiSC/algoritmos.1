@@ -9,21 +9,18 @@ int pedir_entero (char name) {
 void imprimir_entero (char name, int x) {
     printf("%c = %d\n", name, x);
 }
+
 int main (void) {
-    int x,y,z,ximput,yimput,zimput;
-    ximput = pedir_entero('x');
-    yimput = pedir_entero('y');
+    int x,y,z,zimput;
+    x = pedir_entero('x');
+    y = pedir_entero('y');
     zimput = pedir_entero('z');
-    x = ximput;
-    y = yimput;
-    z = zimput;
-    assert(x == ximput && y == yimput && z == zimput);
+    z = x;
     x = y;
-    y = y + ximput + z;
-    z = yimput + ximput;
-    assert(x == yimput && y == yimput + ximput + zimput && z == yimput + ximput);
+    y = zimput;
+    printf("luego del intercambio:\n");
+    imprimir_entero('z',z);
     imprimir_entero('x',x);
     imprimir_entero('y',y);
-    imprimir_entero('z',z);
     return 0;
 }

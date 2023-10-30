@@ -1,21 +1,20 @@
 #include <stdio.h>
 #include <assert.h>
-int pedirEntero(void) {
-  int x;
-  printf("Intrduzca un entero\n");
-  scanf("%d", &x);
-  return x;
+int pedir_entero (char name) {
+    int x;
+    printf("ingrese un entero para %c\n", name);
+    scanf("%d", &x);
+    return x;
+}
+int absoluto (int x) {
+    if (x<0) {
+        x = -x;
+    }
+    return x;
 }
 int main (void) {
-    int x = pedirEntero(),a;
-    assert(1);
-    if (x>=0) {
-        a = x;
-    }
-    else {
-        a = -x;
-    }
-    assert(x==x || x==-x);
-    printf("El valor absoluto de %d es: %d\n", x,a);
+    int x;
+    x = pedir_entero('x');
+    printf("el valor absoluto de %d es %d\n", x, absoluto(x));
     return 0;
 }

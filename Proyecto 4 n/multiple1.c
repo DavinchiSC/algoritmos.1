@@ -1,21 +1,25 @@
 #include <stdio.h>
 #include <assert.h>
-#define X 5
-#define Y 3
-int pedirEntero(char c) {
-  int x;
-  printf("Intrduzca un entero %c\n", c);
-  scanf("%d", &x);
-  return x;
+int pedir_entero (char name) {
+    int x;
+    printf("ingrese un entero para %c\n", name);
+    scanf("%d", &x);
+    return x;
+}
+void imprimir_entero (char name, int x) {
+    printf("%c = %d\n", name, x);
 }
 int main (void) {
-    int x = pedirEntero('x'),x0,y = pedirEntero('y'),y0;
-    x0 = x;
-    y0 = y;
-    assert (x == X && y == Y);
-    x = x0 + 1;
-    y = x0 + y0;
-    assert(x == X + 1 && y == X + Y);
-    printf("x = %d, y = %d\n", x,y);
+    int x,y,ximput,yimput;
+    ximput = pedir_entero('x');
+    yimput = pedir_entero('y');
+    x = ximput;
+    y = yimput;
+    assert(x == ximput && y == yimput);
+    x = x + 1;
+    y = ximput + y;
+    assert(x == ximput + 1 && y == ximput + yimput);
+    imprimir_entero('x',x);
+    imprimir_entero('y',y);
     return 0;
 }
