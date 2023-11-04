@@ -41,8 +41,10 @@ int nesimo_primo(int n) {
 int main (void){
     int n;
     n = pedir_entero('n');
-    if(n<0){
-        while (n<0){
+    /*acá pido que el n sea mayor o igual a cero y no menor estricto
+    porque mi función cuenta desde el 1 (que sería el 2) en adelante*/
+    if(n<=0){
+        while (n<=0){
             printf("Introduzca un entero positivo\n");
             scanf("%d", &n);
         }
